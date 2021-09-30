@@ -14,7 +14,7 @@ import androidx.annotation.RequiresApi
 @RequiresApi(Build.VERSION_CODES.M)
 class CallConnection(ctx: Context) : Connection() {
     var ctx:Context = ctx
-    val TAG = "CallConnection"
+    val TAG = "DIPANKAR#VC"
 
     override fun onShowIncomingCallUi() {
         Log.i(TAG, "onShowIncomingCallUi")

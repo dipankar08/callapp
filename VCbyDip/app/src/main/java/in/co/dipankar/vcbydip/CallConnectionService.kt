@@ -8,12 +8,25 @@ import androidx.annotation.RequiresApi
 
 @RequiresApi(Build.VERSION_CODES.M)
 class CallConnectionService : ConnectionService() {
+    val TAG = "DIPANKAR#VC"
+    override fun onCreate() {
+        Log.i(TAG, "service started")
+        _this = this
+        super.onCreate()
+    }
+
+    override fun onDestroy() {
+        Log.i(TAG, "service ended")
+        super.onDestroy()
+    }
     override fun onCreateOutgoingConnection(
         connectionManagerPhoneAccount: PhoneAccountHandle?,
         request: ConnectionRequest?
     ): Connection {
-        Log.i("CallConnectionService", "onCreateOutgoingConnection")
-        return  CallConnection(this)
+        Log.i(TAG, "onCreateOutgoingConnection")
+        val c =  CallConnection(this)
+        MainActivity.setConnection(c);
+        return c;
     }
 
     override fun onCreateOutgoingConnectionFailed(
@@ -21,15 +34,17 @@ class CallConnectionService : ConnectionService() {
         request: ConnectionRequest?
     ) {
         super.onCreateOutgoingConnectionFailed(connectionManagerPhoneAccount, request)
-        Log.i("CallConnectionService", "create outgoing call failed")
+        Log.i(TAG, "create outgoing call failed")
     }
 
     override fun onCreateIncomingConnection(
         connectionManagerPhoneAccount: PhoneAccountHandle?,
         request: ConnectionRequest?
     ): Connection {
-        Log.i("CallConnectionService", "onCreateIncomingConnection")
-        return  CallConnection(this)
+        Log.i(TAG, "onCreateIncomingConnection")
+        val c =  CallConnection(this)
+        MainActivity.setConnection(c);
+        return c;
     }
 
     override fun onCreateIncomingConnectionFailed(
@@ -37,6 +52,10 @@ class CallConnectionService : ConnectionService() {
         request: ConnectionRequest?
     ) {
         super.onCreateIncomingConnectionFailed(connectionManagerPhoneAccount, request)
-        Log.i("CallConnectionService", "create outgoing call failed ")
+        Log.i(TAG , "create outgoing call failed ")
+    }
+
+    companion object {
+        lateinit var _this: ConnectionService;
     }
 }

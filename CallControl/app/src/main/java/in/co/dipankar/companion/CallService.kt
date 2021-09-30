@@ -14,7 +14,7 @@ import androidx.lifecycle.Observer
 @RequiresApi(Build.VERSION_CODES.M)
 class CallService : InCallService() {
     companion object {
-        private const val TAG = "DIPANKAR"
+        private const val TAG = "DIPANKAR#ADMIN"
     }
 
     var isMute = false
@@ -77,6 +77,7 @@ class CallService : InCallService() {
 
     override fun onConnectionEvent(call: Call?, event: String?, extras: Bundle?) {
         logxx("onConnectionEvent")
+        logxx("event: ${event.toString()} , extra: ${extras.toString()}")
         super.onConnectionEvent(call, event, extras)
     }
 
@@ -115,6 +116,12 @@ class CallService : InCallService() {
 
     private val callCallback = @RequiresApi(Build.VERSION_CODES.M)
     object : Call.Callback() {
+        override fun onConnectionEvent(call: Call?, event: String?, extras: Bundle?) {
+            logxx("got event")
+            logxx("got event ${event.toString()} extra: ${extras.toString()}")
+            super.onConnectionEvent(call, event, extras)
+        }
+
         override fun onStateChanged(call: Call, state: Int) {
 
             var logstr = when (call.state) {
